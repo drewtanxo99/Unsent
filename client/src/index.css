@@ -1,0 +1,296 @@
+/* ─── CSS Variables ─────────────────────────────────── */
+:root {
+  --bg: #080810;
+  --paper: #f5f0e8;
+  --dim: #d8d0b8;
+  --ghost: rgba(245, 240, 232, 0.50);
+  --accent: #e8c080;
+  --danger: #c87070;
+  --border: rgba(245, 240, 232, 0.16);
+  --border-hover: rgba(245, 240, 232, 0.32);
+
+  --font-display: 'Cormorant SC', serif;
+  --font-body: 'Lora', serif;
+  --font-ui: 'Cormorant Garamond', serif;
+}
+
+/* ─── Reset & Base ───────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* ─── Film Grain Overlay ─────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+}
+
+/* ─── App Layout ──────────────────────────────────────── */
+.app-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Screen System ───────────────────────────────────── */
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.screen.off {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────── */
+.screen::-webkit-scrollbar {
+  width: 4px;
+}
+
+.screen::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.screen::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: 2px;
+}
+
+/* ─── Keyframes ──────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1.0;
+  }
+}
+
+@keyframes particleDrift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(-100vh) translateX(var(--dx, 20px));
+    opacity: 0;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+
+  70% {
+    transform: scale(0.92);
+  }
+
+  90% {
+    transform: scale(1.04);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(232, 192, 128, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 28px rgba(232, 192, 128, 0.7);
+  }
+}
+
+@keyframes candleGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 16px rgba(232, 192, 128, 0.5));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 40px rgba(232, 192, 128, 0.9));
+  }
+}
+
+/* ─── Utility Animations ─────────────────────────────── */
+.fade-up {
+  animation: fadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* ─── Button Base ─────────────────────────────────────── */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-ui);
+  color: var(--paper);
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px rgba(232, 192, 128, 0.15);
+}
+
+/* ─── Shared Button Styles ───────────────────────────── */
+.btn-primary {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.85rem 2.5rem;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #f0cc90;
+  border-color: #f0cc90;
+  box-shadow: 0 0 28px rgba(232, 192, 128, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: transparent;
+  border: 1px solid var(--border-hover);
+  padding: 0.85rem 2.5rem;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+.btn-ghost:hover {
+  color: var(--paper);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(232, 192, 128, 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--danger);
+  background: transparent;
+  border: 1px solid rgba(200, 112, 112, 0.6);
+  padding: 0.85rem 2.5rem;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+.btn-danger:hover {
+  border-color: var(--danger);
+  box-shadow: 0 0 20px rgba(200, 112, 112, 0.3);
+  background: rgba(200, 112, 112, 0.06);
+}
+
+/* ─── Mobile Base ─────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  .btn-primary,
+  .btn-ghost,
+  .btn-danger {
+    font-size: 0.82rem;
+    padding: 0.75rem 1.8rem;
+  }
+}

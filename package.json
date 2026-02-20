@@ -1,0 +1,23 @@
+{
+  "name": "unsent",
+  "version": "1.0.0",
+  "description": "An intimate letter-writing app for the things you couldn't say",
+  "type": "module",
+  "scripts": {
+    "dev:server": "node server/index.js",
+    "dev:client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm run build --prefix client",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "lowdb": "^7.0.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

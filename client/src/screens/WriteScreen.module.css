@@ -1,0 +1,244 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 3.5rem 2rem 10rem;
+    position: relative;
+    z-index: 2;
+}
+
+.back {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ghost);
+    z-index: 10;
+    transition: color 0.25s ease;
+}
+
+.back:hover {
+    color: var(--dim);
+}
+
+.inner {
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+    flex: 1;
+}
+
+.salutation {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 1.8rem;
+    animation: fadeUp 0.6s ease both;
+}
+
+.dear {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--dim);
+}
+
+.recipient {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* Lined paper effect */
+.paperWrap {
+    position: relative;
+    transition: outline 0.3s ease, box-shadow 0.3s ease;
+}
+
+.paperWrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(to bottom,
+            transparent,
+            transparent 33px,
+            rgba(245, 240, 232, 0.04) 33px,
+            rgba(245, 240, 232, 0.04) 34px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.errorFlash {
+    animation: errorPulse 0.5s ease;
+}
+
+@keyframes errorPulse {
+
+    0%,
+    100% {
+        outline: 1px solid transparent;
+        box-shadow: none;
+    }
+
+    50% {
+        outline: 1px solid var(--accent);
+        box-shadow: 0 0 20px rgba(232, 192, 128, 0.25);
+    }
+}
+
+.textarea {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 320px;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 34px;
+    color: var(--paper);
+    caret-color: var(--accent);
+    padding: 0;
+    padding-top: 3px;
+    letter-spacing: 0.01em;
+    overflow: hidden;
+}
+
+.textarea::placeholder {
+    color: var(--ghost);
+}
+
+.textarea:focus {
+    outline: none;
+}
+
+/* ─── Bottom Bar ──────────────────────────────────────── */
+.bottomBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.bottomFade {
+    height: 64px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+}
+
+.bottomContent {
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    max-width: 680px;
+    width: calc(100% - 4rem);
+    margin: 0 auto;
+}
+
+.wordCount {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--ghost);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.wordCount.active {
+    color: var(--accent);
+    text-shadow: 0 0 12px rgba(232, 192, 128, 0.4);
+}
+
+.bottomActions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+/* ─── Discard Overlay ─────────────────────────────────── */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 8, 16, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease;
+}
+
+.confirmBox {
+    background: #10101c;
+    border: 1px solid var(--border-hover);
+    border-radius: 4px;
+    padding: 2.5rem;
+    max-width: 360px;
+    width: 90%;
+    text-align: center;
+    animation: fadeUp 0.3s ease;
+}
+
+.confirmQ {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--paper);
+    margin-bottom: 0.75rem;
+}
+
+.confirmSub {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--dim);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.confirmActions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 4.5rem 1.25rem 10rem;
+    }
+
+    .inner {
+        max-width: 100%;
+    }
+
+    .bottomContent {
+        width: 100%;
+        padding: 0.75rem 1.25rem 1.25rem;
+        box-sizing: border-box;
+    }
+
+    .bottomActions {
+        gap: 0.5rem;
+    }
+
+    .textarea {
+        font-size: 1rem;
+        line-height: 32px;
+    }
+
+    .salutation {
+        margin-bottom: 1.2rem;
+    }
+}
